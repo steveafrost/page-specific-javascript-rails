@@ -52,3 +52,5 @@ app/views/products/show.html.erb
 That's a great pattern for getting page specific JS. You can even load another manifest there or render a partial with JS.
 
 In general the pattern should be to write it agnostically and include an application wide manifest.
+
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/page-specific-javascript-rails' title='Page Specific Javascript Rails'>Page Specific Javascript Rails</a> on Learn.co and start learning to code for free.</p>
