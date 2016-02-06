@@ -5,31 +5,41 @@
 1. How to Write Page-Specific JS
 2. Loading Page-Specific JS in the Manifest
 3. Loading Page-Specific JS through javascript_include_tag
-4. Creating a content_for page specific JS and writing JS in partials.
+4. Creating a `content_for` page specific JS and writing JS in partials.
 
 ## Outline
 
-The first thing about page specific js is that there really shouldn't be too much of that. write page specific js as units in js files that may or may not correlate to a page, controller, or action, but rather are grouped functionally or through objects in single js files.
-
-You might have a app/assets/users.js file that relates to functionality for the user's account, like behavoirs for their profile page or adds special links to their avatar, but in reality, that JS should be loaded once on the initial page load and then just used in the rest of the application.
-
-So the first thing is to learn to write page specific js but still include it in the manifest.
+As we create our application, using a single file for all of our JS can cause a lot of headaches. As the file gets bigger and bigger it becomes harder to find anything. We want to separate our JS into different files based on their functionality. One way to do this is to have page specific JS files.
 
 ## Page Specific JS in a manifest
 
-you might have a products.js that controls behaviors on product card units, like hovers or drop downs or ajax submissions, but that should all be written in products.js, products.js should be loaded in the main manifest, and then you just have a $(ready) in products.js that only fires against DOM elements that are either present or not. So no page specific js, just write it agnostic to the page and load it all in the main manifest.
+By default, when you use the [Rails Generators](http://guides.rubyonrails.org/generators.html) to create a new resource, Rails will create a page specific JS and CSS file. From here we want to put any JS that is specific to the web pages associated with the resource. For example, say we have a Blog resource. We add JS that loads the comments for a blog after the page loads. This bit of JS should be put in the file `app/assets/javascripts/blogs.js.coffee` ([CoffeeScript](http://coffeescript.org) is the default way to create JS for Rails). From here we just need to make sure our JS file is included in the JS manifest.
 
-## Page Specific JS with individual javascript_include_tag
+**File: `app/assets/javascripts/application.js`**
 
-Should you need a little snippet of JS that is very page or layout specific, just write it in app/assets and then include that in the different layout.
-
-## A content_for
-
-For truely page specific javascript the best thing to do is add a content_for :js block in your layout (either in head or below the body)
-
-application.html.erb
-
+```javascript
+//= require blogs
 ```
+## Controller Specific JS
+
+When the browser loads our JavaScript, it parses the entire file and runs the JS. With a big application this can be a lot of JS. Different pages might start to have functionality we don't want to share accross the applicaiton. An option to allow for a Page specific JS file be loaded only with the pages we want is to use the name of the controller.
+
+```erb
+<%= javascript_include_tag params[:controller] %>
+```
+
+Instead of adding blogs.js to the manifest file, we could instead load the file based off of the controller's name.  We can place this in the head or below the body of our layout it will load the JS file that matches the name of the controller.
+
+A request made to `blogs#index` would result in params:
+`{controller: 'blogs', action: 'index'}` and the `javascript_include_tag` will now load the blogs.js file.  If we visit a page from a different controller, the `javascript_include_tag` will include the JS specific to that controller.
+
+## Using content_for
+
+The final way to include JS specific to a page is to use a `content_for :js` block in your layout.  We can either put this in the head or below the body of the layout.
+
+**File: application.html.erb**
+
+```erb
 <head>
   <meta>
   <%= javascript_include_tag 'application' %>
@@ -38,19 +48,16 @@ application.html.erb
 
 Then in your view
 
-app/views/products/show.html.erb
+**File: app/views/blogs/show.html.erb**
 
-```
+```erb
 <% content_for :js do %>
-<script>
- Some Page specific JS
-</script>
-<%= javascript_include_tag 'products' %>
+  <script>
+    alert('Some Page specific JS');
+  </script>
 <% end %>
 ```
 
-That's a great pattern for getting page specific JS. You can even load another manifest there or render a partial with JS.
-
-In general the pattern should be to write it agnostically and include an application wide manifest.
+Anything placed in our script tag will run only on our show page.
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/page-specific-javascript-rails' title='Page Specific Javascript Rails'>Page Specific Javascript Rails</a> on Learn.co and start learning to code for free.</p>
