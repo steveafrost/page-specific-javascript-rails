@@ -1,15 +1,15 @@
 # Page Specific Javascript Rails
 
-## Objectives
-
-1. How to Write Page-Specific JS
-2. Loading Page-Specific JS in the Manifest
-3. Loading Page-Specific JS through javascript_include_tag
-4. Creating a `content_for` Page-Specific JS and writing JS in partials.
-
-## Outline
+## Overview
 
 As we create our application, using a single file for all of our JS can cause a lot of headaches. As the file gets bigger and bigger it becomes harder to find anything. We want to organize our JS into different files based on their functionality. One way to do this is to have page-specific JS files.
+
+## Objectives
+
+1. Write and load page-specific Javascript in the Manifest
+3. Load page-specific Javascript through javascript_include_tag
+4. Creating a `content_for` page-specific JS and write Javascript in partials
+
 
 ## Page-Specific JS in a manifest
 
@@ -22,7 +22,7 @@ By default, when you use the [Rails Generators](http://guides.rubyonrails.org/ge
 ```
 ## Controller Specific JS
 
-When the browser loads our JavaScript, it parses the entire file and runs the it. With a big application this can be a lot of JS. Different pages might start to have functionality we don't want to share accross the applicaiton. An option to allow for a page-specific JS file to be loaded only with the pages we want is to use the name of the controller.
+When the browser loads our JavaScript, it parses the entire file and runs it. With a big application this can be a lot of JS. Different pages might start to have functionality we don't want to share accross the application. An option to allow for a page-specific JS file to be loaded only with the pages we want is to use the name of the controller.
 
 ```erb
 <%= javascript_include_tag params[:controller] %>
