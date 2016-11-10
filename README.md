@@ -22,7 +22,7 @@ By default, when you use the [Rails Generators](http://guides.rubyonrails.org/ge
 ```
 ## Controller Specific JS
 
-When the browser loads our JavaScript, it parses the entire file and runs it. With a big application this can be a lot of JS. Different pages might start to have functionality we don't want to share accross the application. An option to allow for a page-specific JS file to be loaded only with the pages we want is to use the name of the controller.
+When the browser loads our JavaScript, it parses the entire file and runs it. With a big application this can be a lot of JS. Different pages might start to have functionality we don't want to share across the application. An option to allow for a page-specific JS file to be loaded only with the pages we want is to use the name of the controller.
 
 ```erb
 <%= javascript_include_tag params[:controller] %>
@@ -90,3 +90,5 @@ $(".pages.contact").click(function() {
 ```
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/page-specific-javascript-rails' title='Page Specific Javascript Rails'>Page Specific Javascript Rails</a> on Learn.co and start learning to code for free.</p>
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/page-specific-javascript-rails'>Page Specific Javascript </a> on Learn.co and start learning to code for free.</p>
